@@ -1,0 +1,24 @@
+{
+  "name": "scormy-editor",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PixlRainbow/scormy-editor-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PixlRainbow/scormy-editor-2/issues"
+  },
+  "homepage": "https://github.com/PixlRainbow/scormy-editor-2#readme",
+  "dependencies": {
+    "@polymer/paper-elements": "0.0.3",
+    "interactjs": "^1.6.3",
+    "lit-html": "^1.1.2"
+  }
+}
