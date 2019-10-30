@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SCORMy Editor</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script type="text/javascript" src='node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js'></script>
+    <script type='module'>
+        // import "./node_modules/@polymer/polymer/polymer-legacy.js";
+        import './node_modules/@polymer/paper-styles/element-styles/paper-item-styles.js';
+        import './node_modules/@polymer/paper-styles/element-styles/paper-material-styles.js';
+        // import './node_modules/@polymer/paper-tabs/paper-tabs.js';
+        // import './node_modules/@polymer/iron-pages/iron-pages.js';
+    </script>
+    <script type='module' src='editor.js'></script>
+    <script type='module' src='main.js'></script>
+</head>
+<body onload="start_editor()">
+    <!-- No more seperate index and editor pages -- you start on the editor page -->
+    <scorm-editor selected=0></scorm-editor>
+</body>
+</html>
