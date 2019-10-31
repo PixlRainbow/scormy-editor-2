@@ -23,7 +23,7 @@ class EditorElement extends PolymerElement{
     }
 
     _selectedChanged(event) {
-        console.dir(event);
+        console.dir("New tab value: "+ event.detail["value"]);
     }
 
     static get template(){
@@ -42,6 +42,15 @@ class EditorElement extends PolymerElement{
                 top: 20px;
                 right: 24px;
             }
+            #pages > div {
+                height: 70vh;
+                text-align: center;
+            }
+
+            #pages > div > iframe {
+                height:100%;
+                width:100%;
+            }
         </style>
         <paper-tabs id="tabs" selected="{{selected}}">
             <paper-tab>Tab 1</paper-tab>
@@ -51,8 +60,8 @@ class EditorElement extends PolymerElement{
         
         <iron-pages id="pages" selected="{{selected}}">
             <div><iframe style="display: block;"></iframe></div>
-            <div>Page 2</div>
-            <div>Page 3</div>
+            <div><iframe style="display: block;"></iframe></div>
+            <div><iframe style="display: block;"></iframe></div>
         </iron-pages>
         <paper-fab icon="add" on-click="add_tab"></paper-fab>
         `;
@@ -63,7 +72,7 @@ class EditorElement extends PolymerElement{
             `<paper-tab>Tab ${n}</paper-tab>`
         );
         this.selectedPage.insertAdjacentHTML('afterend',
-            `<div>Page ${n}</div>`
+            `<div><iframe style="display: block;"></iframe></div>`
         );
         this.selected++;
     }
