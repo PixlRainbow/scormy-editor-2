@@ -3,6 +3,7 @@ import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 import '@polymer/paper-fab';
 import '@polymer/iron-icons';
+import './editor-tabs'
 
 class EditorElement extends PolymerElement{
     static get properties(){
@@ -21,7 +22,7 @@ class EditorElement extends PolymerElement{
             :host {
                 display: block;
             }
-            paper-tabs {
+            paper-tabs, editor-tabs {
                 background-color: var(--tabs-background-colour, mediumslateblue);
                 --paper-tabs-selection-bar-color: var(--tabs-colour, white);
                 color: var(--tabs-colour, white);
@@ -32,11 +33,11 @@ class EditorElement extends PolymerElement{
                 right: 24px;
             }
         </style>
-        <paper-tabs id="tabs" selected="{{selected}}">
-            <paper-tab>Tab 1</paper-tab>
-            <paper-tab>Tab 2</paper-tab>
-            <paper-tab>Tab 3</paper-tab>
-        </paper-tabs>
+        <editor-tabs id="tabs" selected="{{selected}}" on-closeclicked="close_tab">
+            <editor-tab>Tab 1</editor-tab>
+            <editor-tab>Tab 2</editor-tab>
+            <editor-tab>Tab 3</editor-tab>
+        </editor-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
             <div>Page 1</div>
@@ -49,12 +50,20 @@ class EditorElement extends PolymerElement{
     add_tab(){
         let n = this.$.tabs.childElementCount + 1;
         this.selectedTab.insertAdjacentHTML('afterend',
-            `<paper-tab>Tab ${n}</paper-tab>`
+            `<editor-tab>Tab ${n}</editor-tab>`
         );
         this.selectedPage.insertAdjacentHTML('afterend',
             `<div>Page ${n}</div>`
         );
         this.selected++;
+    }
+    /**
+     * @param {CustomEvent} ev 
+     */
+    close_tab(ev){
+        let i = ev.detail.index;
+        this.$.tabs.children[i].remove();
+        this.$.pages.children[i].remove();
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
