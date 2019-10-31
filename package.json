@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/PixlRainbow/scormy-editor-2#readme",
   "dependencies": {
+    "@polymer/iron-icons": "^3.0.1",
     "@polymer/iron-pages": "^3.0.1",
+    "@polymer/paper-fab": "^3.0.1",
     "@polymer/paper-tabs": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.3.0",
     "interactjs": "^1.6.3",
