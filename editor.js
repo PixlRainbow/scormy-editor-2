@@ -4,6 +4,7 @@ import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 import '@polymer/paper-fab';
 import '@polymer/iron-icons';
+import './editor-tabs'
 
 class EditorElement extends PolymerElement{
     constructor(){
@@ -25,7 +26,7 @@ class EditorElement extends PolymerElement{
             :host {
                 display: block;
             }
-            paper-tabs {
+            paper-tabs, editor-tabs {
                 background-color: var(--tabs-background-colour, mediumslateblue);
                 --paper-tabs-selection-bar-color: var(--tabs-colour, white);
                 color: var(--tabs-colour, white);
@@ -36,11 +37,11 @@ class EditorElement extends PolymerElement{
                 right: 24px;
             }
         </style>
-        <paper-tabs id="tabs" selected="{{selected}}">
-            <paper-tab on-dblclick="rename_tab">Tab 1</paper-tab>
-            <paper-tab on-dblclick="rename_tab">Tab 2</paper-tab>
-            <paper-tab on-dblclick="rename_tab">Tab 3</paper-tab>
-        </paper-tabs>
+        <editor-tabs id="tabs" selected="{{selected}}" on-closeclicked="close_tab">
+            <editor-tab on-dblclick="rename_tab">Tab 1</editor-tab>
+            <editor-tab on-dblclick="rename_tab">Tab 2</editor-tab>
+            <editor-tab on-dblclick="rename_tab">Tab 3</editor-tab>
+        </editor-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
             <div>Page 1</div>
@@ -52,7 +53,7 @@ class EditorElement extends PolymerElement{
     }
     add_tab(){
         let n = this.$.tabs.childElementCount + 1;
-        let newTab = document.createElement('paper-tab');
+        let newTab = document.createElement('editor-tab');
         newTab.textContent = `Tab ${n}`;
         newTab.addEventListener('dblclick', this.rename_tab);
         this.selectedTab.insertAdjacentElement('afterend', newTab);
@@ -60,6 +61,14 @@ class EditorElement extends PolymerElement{
             `<div>Page ${n}</div>`
         );
         this.selected++;
+    }
+    /**
+     * @param {CustomEvent} ev 
+     */
+    close_tab(ev){
+        let i = ev.detail.index;
+        this.$.tabs.children[i].remove();
+        this.$.pages.children[i].remove();
     }
     /**
      * @param {Event} ev 
