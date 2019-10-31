@@ -3,6 +3,12 @@ import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 
 class EditorElement extends PolymerElement{
+
+    ready(){
+        super.ready();
+        this.addEventListener('selected-changed', this._selectedChanged);
+    }
+
     static get properties(){
         return {
             selected: {
@@ -10,9 +16,14 @@ class EditorElement extends PolymerElement{
                 value: 0,
                 notify: true,
                 reflectToAttribute: true
-            }
+            },
         }
     }
+
+    _selectedChanged(event) {
+        console.dir(event);
+    }
+
     static get template(){
         return html`
         <style>
@@ -32,7 +43,7 @@ class EditorElement extends PolymerElement{
         </paper-tabs>
         
         <iron-pages selected="{{selected}}">
-            <div>Page 1</div>
+            <div><iframe style="display: block;"></iframe></div>
             <div>Page 2</div>
             <div>Page 3</div>
         </iron-pages>
