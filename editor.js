@@ -1,10 +1,14 @@
 import { PolymerElement, html } from "@polymer/polymer/polymer-element";
+import { afterNextRender } from "@polymer/polymer/lib/utils/render-status";
 import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 import '@polymer/paper-fab';
 import '@polymer/iron-icons';
 
 class EditorElement extends PolymerElement{
+    constructor(){
+        super();
+    }
     static get properties(){
         return {
             selected: {
@@ -33,9 +37,9 @@ class EditorElement extends PolymerElement{
             }
         </style>
         <paper-tabs id="tabs" selected="{{selected}}">
-            <paper-tab>Tab 1</paper-tab>
-            <paper-tab>Tab 2</paper-tab>
-            <paper-tab>Tab 3</paper-tab>
+            <paper-tab on-dblclick="rename_tab">Tab 1</paper-tab>
+            <paper-tab on-dblclick="rename_tab">Tab 2</paper-tab>
+            <paper-tab on-dblclick="rename_tab">Tab 3</paper-tab>
         </paper-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
@@ -48,13 +52,22 @@ class EditorElement extends PolymerElement{
     }
     add_tab(){
         let n = this.$.tabs.childElementCount + 1;
-        this.selectedTab.insertAdjacentHTML('afterend',
-            `<paper-tab>Tab ${n}</paper-tab>`
-        );
+        let newTab = document.createElement('paper-tab');
+        newTab.textContent = `Tab ${n}`;
+        newTab.addEventListener('dblclick', this.rename_tab);
+        this.selectedTab.insertAdjacentElement('afterend', newTab);
         this.selectedPage.insertAdjacentHTML('afterend',
             `<div>Page ${n}</div>`
         );
         this.selected++;
+    }
+    /**
+     * @param {Event} ev 
+     */
+    rename_tab(ev) {
+        let tab = ev.target;
+        let newName = prompt('Enter Slide Name', tab.textContent) || tab.textContent;
+        tab.textContent = newName;
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
