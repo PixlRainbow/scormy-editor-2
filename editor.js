@@ -5,6 +5,12 @@ import '@polymer/paper-fab';
 import '@polymer/iron-icons';
 
 class EditorElement extends PolymerElement{
+
+    ready(){
+        super.ready();
+        this.addEventListener('selected-changed', this._selectedChanged);
+    }
+
     static get properties(){
         return {
             selected: {
@@ -12,9 +18,14 @@ class EditorElement extends PolymerElement{
                 value: 0,
                 notify: true,
                 reflectToAttribute: true
-            }
+            },
         }
     }
+
+    _selectedChanged(event) {
+        console.dir("New tab value: "+ event.detail["value"]);
+    }
+
     static get template(){
         return html`
         <style>
@@ -31,6 +42,15 @@ class EditorElement extends PolymerElement{
                 top: 20px;
                 right: 24px;
             }
+            #pages > div {
+                height: 70vh;
+                text-align: center;
+            }
+
+            #pages > div > iframe {
+                height:100%;
+                width:100%;
+            }
         </style>
         <paper-tabs id="tabs" selected="{{selected}}">
             <paper-tab>Tab 1</paper-tab>
@@ -39,9 +59,9 @@ class EditorElement extends PolymerElement{
         </paper-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
-            <div>Page 1</div>
-            <div>Page 2</div>
-            <div>Page 3</div>
+            <div><iframe style="display: block;"></iframe></div>
+            <div><iframe style="display: block;"></iframe></div>
+            <div><iframe style="display: block;"></iframe></div>
         </iron-pages>
         <paper-fab icon="add" on-click="add_tab"></paper-fab>
         `;
@@ -52,7 +72,7 @@ class EditorElement extends PolymerElement{
             `<paper-tab>Tab ${n}</paper-tab>`
         );
         this.selectedPage.insertAdjacentHTML('afterend',
-            `<div>Page ${n}</div>`
+            `<div><iframe style="display: block;"></iframe></div>`
         );
         this.selected++;
     }
