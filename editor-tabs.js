@@ -11,9 +11,9 @@ const PaperTabsElement = customElements.get('paper-tabs');
 class EditorTabElement extends PaperTabElement {
     constructor(){
         super();
-        // afterNextRender(this, () => {
-        //     this.appendChild((html`<iron-icon icon="close"></iron-icon>`).content.firstElementChild);
-        // });
+        afterNextRender(this, () => {
+            this.addEventListener('dblclick', this.rename_tab);
+        });
     }
     static get template(){
         return html`
@@ -30,6 +30,10 @@ class EditorTabElement extends PaperTabElement {
             bubbles: true,
             detail: {index: this.index}
         }));
+    }
+    rename_tab() {
+        let newName = prompt('Enter Slide Name', this.textContent) || this.textContent;
+        this.textContent = newName;
     }
 }
 
