@@ -1,4 +1,5 @@
 import { PolymerElement, html } from "@polymer/polymer/polymer-element";
+import { afterNextRender } from "@polymer/polymer/lib/utils/render-status";
 import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 import '@polymer/paper-fab';
@@ -6,6 +7,9 @@ import '@polymer/iron-icons';
 import './editor-tabs'
 
 class EditorElement extends PolymerElement{
+    constructor(){
+        super();
+    }
     static get properties(){
         return {
             selected: {
@@ -34,9 +38,9 @@ class EditorElement extends PolymerElement{
             }
         </style>
         <editor-tabs id="tabs" selected="{{selected}}" on-closeclicked="close_tab">
-            <editor-tab>Tab 1</editor-tab>
-            <editor-tab>Tab 2</editor-tab>
-            <editor-tab>Tab 3</editor-tab>
+            <editor-tab on-dblclick="rename_tab">Tab 1</editor-tab>
+            <editor-tab on-dblclick="rename_tab">Tab 2</editor-tab>
+            <editor-tab on-dblclick="rename_tab">Tab 3</editor-tab>
         </editor-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
@@ -49,9 +53,10 @@ class EditorElement extends PolymerElement{
     }
     add_tab(){
         let n = this.$.tabs.childElementCount + 1;
-        this.selectedTab.insertAdjacentHTML('afterend',
-            `<editor-tab>Tab ${n}</editor-tab>`
-        );
+        let newTab = document.createElement('editor-tab');
+        newTab.textContent = `Tab ${n}`;
+        newTab.addEventListener('dblclick', this.rename_tab);
+        this.selectedTab.insertAdjacentElement('afterend', newTab);
         this.selectedPage.insertAdjacentHTML('afterend',
             `<div>Page ${n}</div>`
         );
@@ -64,6 +69,14 @@ class EditorElement extends PolymerElement{
         let i = ev.detail.index;
         this.$.tabs.children[i].remove();
         this.$.pages.children[i].remove();
+    }
+    /**
+     * @param {Event} ev 
+     */
+    rename_tab(ev) {
+        let tab = ev.target;
+        let newName = prompt('Enter Slide Name', tab.textContent) || tab.textContent;
+        tab.textContent = newName;
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
