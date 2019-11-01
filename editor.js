@@ -37,8 +37,12 @@ class EditorElement extends PolymerElement{
                 top: 20px;
                 right: 24px;
             }
+            .drag-hover {
+                background-color: rgba(255,255,255,0.3);
+            }
         </style>
-        <editor-tabs id="tabs" selected="{{selected}}" on-closeclicked="close_tab">
+        <editor-tabs id="tabs" selected="{{selected}}"
+            on-closeclicked="close_tab" on-tabmoved="move_tab">
             <editor-tab>Tab 1</editor-tab>
             <editor-tab>Tab 2</editor-tab>
             <editor-tab>Tab 3</editor-tab>
@@ -76,6 +80,16 @@ class EditorElement extends PolymerElement{
         this.$.tabs.children[i].remove();
         this.$.pages.children[i].remove();
         this.selected = Math.max(this.selected - 1, 0);
+    }
+    /**
+     * @param {CustomEvent} ev 
+     */
+    move_tab(ev){
+        let from = ev.detail.from;
+        let to = ev.detail.to;
+        this.$.pages.children[to].insertAdjacentElement('beforebegin',
+            this.$.pages.children[from]
+        );
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
