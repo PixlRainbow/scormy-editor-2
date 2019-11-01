@@ -9,6 +9,7 @@ import './editor-tabs'
 class EditorElement extends PolymerElement{
     constructor(){
         super();
+        this.tabCount = 3;
     }
     static get properties(){
         return {
@@ -38,9 +39,9 @@ class EditorElement extends PolymerElement{
             }
         </style>
         <editor-tabs id="tabs" selected="{{selected}}" on-closeclicked="close_tab">
-            <editor-tab on-dblclick="rename_tab">Tab 1</editor-tab>
-            <editor-tab on-dblclick="rename_tab">Tab 2</editor-tab>
-            <editor-tab on-dblclick="rename_tab">Tab 3</editor-tab>
+            <editor-tab>Tab 1</editor-tab>
+            <editor-tab>Tab 2</editor-tab>
+            <editor-tab>Tab 3</editor-tab>
         </editor-tabs>
         
         <iron-pages id="pages" selected="{{selected}}">
@@ -52,7 +53,7 @@ class EditorElement extends PolymerElement{
         `;
     }
     add_tab(){
-        let n = this.$.tabs.childElementCount + 1;
+        let n = ++this.tabCount;
         let newTab = document.createElement('editor-tab');
         newTab.textContent = `Tab ${n}`;
         newTab.addEventListener('dblclick', this.rename_tab);
@@ -69,14 +70,6 @@ class EditorElement extends PolymerElement{
         let i = ev.detail.index;
         this.$.tabs.children[i].remove();
         this.$.pages.children[i].remove();
-    }
-    /**
-     * @param {Event} ev 
-     */
-    rename_tab(ev) {
-        let tab = ev.target;
-        let newName = prompt('Enter Slide Name', tab.textContent) || tab.textContent;
-        tab.textContent = newName;
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
