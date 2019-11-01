@@ -2,7 +2,7 @@ import { PolymerElement, html } from "@polymer/polymer/polymer-element";
 import { afterNextRender } from "@polymer/polymer/lib/utils/render-status";
 import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import '@polymer/paper-tabs/paper-tab';
-import '@polymer/paper-tabs/paper-tabs'
+import '@polymer/paper-tabs/paper-tabs';
 import '@polymer/iron-icons';
 
 const PaperTabElement = customElements.get('paper-tab');

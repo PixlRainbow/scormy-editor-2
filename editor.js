@@ -4,7 +4,7 @@ import '@polymer/iron-pages';
 import '@polymer/paper-tabs';
 import '@polymer/paper-fab';
 import '@polymer/iron-icons';
-import './editor-tabs'
+import './editor-tabs';
 
 class EditorElement extends PolymerElement{
     constructor(){
@@ -19,7 +19,7 @@ class EditorElement extends PolymerElement{
                 notify: true,
                 reflectToAttribute: true
             }
-        }
+        };
     }
     static get template(){
         return html`
@@ -55,9 +55,9 @@ class EditorElement extends PolymerElement{
     add_tab(){
         let n = ++this.tabCount;
         let newTab = document.createElement('editor-tab');
-        newTab.textContent = `Tab ${n}`;
-        newTab.addEventListener('dblclick', this.rename_tab);
-        this.selectedTab.insertAdjacentElement('afterend', newTab);
+        this.selectedTab.insertAdjacentHTML('afterend', 
+            `<editor-tab>Tab ${n}</editor-tab>`
+        );
         this.selectedPage.insertAdjacentHTML('afterend',
             `<div>Page ${n}</div>`
         );
