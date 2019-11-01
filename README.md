@@ -17,4 +17,4 @@
 ## Special Thanks
 ![BrowserStack Logo](img/Browserstack-logo@2x.png)
 
-As we were required to produce SCORM 1.2 compliant courses which were compatible with Internet Explorer 11, we used BrowserStack to simulate the Internet Explorer 11 web browser and run automated tests. BrowserStack provided a convenient, centralized way to test compatibility when not all of our team members were using Windows. It was much faster than starting our own VMs whenever we needed to do testing.
+As we were required to produce SCORM 1.2 compliant courses which were compatible with Internet Explorer 11, we used BrowserStack to simulate the Internet Explorer 11 web browser. BrowserStack provided a convenient, centralized way to test compatibility when not all of our team members were using Windows. It was much faster than starting our own VMs whenever we needed to do testing.
