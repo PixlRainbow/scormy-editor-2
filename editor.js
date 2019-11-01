@@ -54,14 +54,19 @@ class EditorElement extends PolymerElement{
     }
     add_tab(){
         let n = ++this.tabCount;
-        let newTab = document.createElement('editor-tab');
-        this.selectedTab.insertAdjacentHTML('afterend', 
-            `<editor-tab>Tab ${n}</editor-tab>`
-        );
-        this.selectedPage.insertAdjacentHTML('afterend',
-            `<div>Page ${n}</div>`
-        );
-        this.selected++;
+        let newTab = `<editor-tab>Tab ${n}</editor-tab>`;
+        let newPage = `<div>Page ${n}</div>`;
+        //if there are no pages selected aka no pages left
+        if(!(this.selectedTab || this.selectedPage)){
+            this.$.tabs.innerHTML += newTab;
+            this.$.pages.innerHTML += newPage;
+            this.selected = 0;
+        }
+        else {
+            this.selectedTab.insertAdjacentHTML('afterend', newTab);
+            this.selectedPage.insertAdjacentHTML('afterend', newPage);
+            this.selected++;
+        }
     }
     /**
      * @param {CustomEvent} ev 
@@ -70,6 +75,7 @@ class EditorElement extends PolymerElement{
         let i = ev.detail.index;
         this.$.tabs.children[i].remove();
         this.$.pages.children[i].remove();
+        this.selected = Math.max(this.selected - 1, 0);
     }
     get selectedTab(){
         return this.$.tabs.children[this.selected];
